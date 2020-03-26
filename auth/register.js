@@ -18,18 +18,19 @@ exports.handler = async event => {
   const password = userData.password.toString();
   const firstname = userData.firstname.toString();
   const lastname = userData.lastname.toString();
-
+  
   const checkEmail = {
     text: 'SELECT firstname FROM users WHERE email = $1',
     values: [email]
   };
-
+  
   try {
     const results = await pool.query(checkEmail);
     if (results.rowCount > 0) {
       const response = {
-        statusCode: 402,
-        body: JSON.stringify({ message: 'User already exists.' })
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        statusCode: 200,
+        body: JSON.stringify({ error: 'User already exists.' })
       };
       return response;
     } else {
@@ -61,14 +62,15 @@ exports.handler = async event => {
           };
           sgMail.send(msg);
           const response = {
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
             statusCode: 200,
-            body: JSON.stringify({ message: 'User added successfully.' })
+            body: JSON.stringify({ message: 'User added successfully.', error: '' })
           };
           return response;
         }
       } catch (err) {
         const response = {
-          headers: { 'Content-Type': 'application/json' },
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
           data: null,
           message: err.message
         };
@@ -78,7 +80,7 @@ exports.handler = async event => {
   } catch (err) {
     const response = {
       statusCode: 402,
-      headers: { 'Access-Control-Allow-Origin': '*' },
+      headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
       body: JSON.stringify(err)
     };
     return response;

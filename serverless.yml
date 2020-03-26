@@ -43,3 +43,15 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  getdata:
+    handler: user/getdata.handler
+    events:
+      - http:
+          path: getdata/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true

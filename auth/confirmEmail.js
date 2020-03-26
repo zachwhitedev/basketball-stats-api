@@ -12,7 +12,7 @@ exports.handler = async event => {
 
   try {
     const results = await pool.query(query);
-    if (results.rows[0]) {
+    if (results.rowCount == 1) {
       const nowConfirmed = 'true';
       const userId = results.rows[0].id;
       const userEmail = results.rows[0].email;
@@ -24,6 +24,10 @@ exports.handler = async event => {
         const result = await pool.query(confirmUser);
         if (result.rowCount > 0) {
           const response = {
+            headers: {
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'
+            },
             statusCode: 200,
             body: JSON.stringify({
               success: 'User email confirmed.',
