@@ -1,0 +1,45 @@
+service: basketball-stats-api
+app: basketball-stats-api
+org: zachwhitedev
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-west-2
+  environment:
+    PG_USER: 'postgres1'
+    PG_HOST: 'zw-postgres-1.dsfgs56fg4s6__FAKE__.us-west-1.rds.amazonaws.com'
+    PG_DB: 'bballapp'
+    PG_PASS: 'sdfgsgs6567__FAKE__sdjfkhs78fgvsdzf'
+    PG_PORT: 8888
+    SENDGRID_API_KEY: 'sg.56asdf6a5ew__FAKE__dfadstyfa5sdf5a6sf'
+    JWT_SECRET: '67a__FAKE__dgsvf'
+
+functions:
+  register:
+    handler: auth/register.handler
+    events:
+      - http:
+          path: register
+          method: post
+          cors: true
+
+  login:
+    handler: auth/login.handler
+    events:
+      - http:
+          path: login
+          method: post
+          integration: lambda
+          cors: true
+
+  confirmEmail:
+    handler: auth/confirmEmail.handler
+    events:
+      - http:
+          path: confirmEmail
+          method: post
+          integration: lambda
+          cors: true
