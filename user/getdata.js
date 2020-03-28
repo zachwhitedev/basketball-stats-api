@@ -26,12 +26,9 @@ exports.handler = async event => {
     const teamData = await pool.query(getTeams);
     const userData = await pool.query(getUserData);
     const playerData = await pool.query(getPlayers);
-
-    Promise.all([teamData, userData, playerData]).then(values => {
-      const returnedTeams = values[0];
-      const returnedUserData = values[1];
-      const returnedPlayers = values[2];
-
+    
+    const [ returnedTeams, returnedUserData, returnedPlayers ] = await Promise.all([teamData, userData, playerData]);
+      
       let teams = [];
       for (let i = 0; i < returnedTeams.rows.length; i++) {
         let team = {
@@ -70,7 +67,6 @@ exports.handler = async event => {
         })
       };
       return response;
-    })
   } catch (err) {
     const response = {
       headers: {
