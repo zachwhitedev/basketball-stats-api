@@ -55,3 +55,12 @@ functions:
             parameters:
               paths:
                 id: true
+
+  getplayers:
+    handler: user/getplayers.handler
+    events:
+      - http:
+          path: getplayers
+          method: get
+          integration: lambda
+          cors: true
