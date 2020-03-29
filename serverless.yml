@@ -64,3 +64,12 @@ functions:
           method: get
           integration: lambda
           cors: true
+
+  getteam:
+    handler: user/getteam.handler
+    events:
+      - http:
+          path: getteam
+          method: post
+          integration: lambda
+          cors: true
