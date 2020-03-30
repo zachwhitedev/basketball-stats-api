@@ -73,3 +73,21 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  addteam:
+    handler: user/addteam.handler
+    events:
+      - http:
+          path: addteam
+          method: post
+          integration: lambda
+          cors: true
+
+  addplayers:
+    handler: user/addplayers.handler
+    events:
+      - http:
+          path: addplayers
+          method: post
+          integration: lambda
+          cors: true
