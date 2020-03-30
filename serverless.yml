@@ -91,3 +91,21 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  addgameevents:
+    handler: user/addgameevents.handler
+    events:
+      - http:
+          path: addgameevents
+          method: post
+          integration: lambda
+          cors: true
+
+  addgame:
+    handler: user/addgame.handler
+    events:
+      - http:
+          path: addgame
+          method: post
+          integration: lambda
+          cors: true
