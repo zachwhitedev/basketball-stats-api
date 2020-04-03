@@ -118,3 +118,12 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  deleteteam:
+    handler: delete/deleteteam.handler
+    events:
+      - http:
+          path: deleteteam
+          method: post
+          integration: lambda
+          cors: true

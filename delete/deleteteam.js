@@ -5,27 +5,27 @@ const pool = require('../db');
 exports.handler = async event => {
   const bodyData = event.body;
   const userid = bodyData.userid;
-  const teamname = bodyData.teamname;
+  const teamid = bodyData.teamid;
 
-  const addTeam = {
-    text: 'INSERT INTO teams (user_id, team_name) VALUES ($1, $2)', // CHANGE THIS TO BE A DELETE OBVIOUSLY
-    values: [userid, teamname]
+  const deleteTeam = {
+    text: 'DELETE FROM teams WHERE team_id = $1 AND user_id',
+    values: [teamid, userid]
   };
 
   try {
-    const addedTeam = await pool.query(addTeam);
-    if (addedTeam.rowCount > 0) {
+    const deletedTeam = await pool.query(deleteTeam);
+    if (deletedTeam.rowCount > 0) {
       const response = {
         headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*'
         },
         body: {
-          message: `New team ${teamname} added successfully`
+          message: `Team deleted successfully`
         }
       };
       return response;
-    } else console.log('Problem writing to database.');
+    } else console.log('Problem deleting from database.');
   } catch (err) {
     const response = {
       headers: {
