@@ -2,22 +2,16 @@
 
 const pool = require('../db');
 const bcrypt = require('bcryptjs');
+
 const sgMail = require('@sendgrid/mail');
 
 exports.handler = async event => {
-  let userData;
-  if (typeof event.body === 'string') {
-    try {
-      userData = JSON.parse(event.body);
-    } catch (e) {
-      new Error('Could not parse Data');
-    }
-  }
 
-  const email = userData.email.toString();
-  const password = userData.password.toString();
-  const firstname = userData.firstname.toString();
-  const lastname = userData.lastname.toString();
+  let userData = JSON.parse(event.body);
+  const email = userData.email;
+  const password = userData.password;
+  const firstname = userData.firstname;
+  const lastname = userData.lastname;
   
   const checkEmail = {
     text: 'SELECT firstname FROM users WHERE email = $1',
@@ -50,24 +44,23 @@ exports.handler = async event => {
         values: [email, hashedPassword, firstname, lastname, confirmString]
       };
       try {
-        const results = await pool.query(query);
+        await pool.query(query);
         sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-        if (results) {
-          const msg = {
-            to: email,
-            from: 'zach@basketballapp.com',
-            subject: 'confirm your account with Basketball App',
-            text: 'no text, using html instead',
-            html: `<h4 style="color: green";">whats up ${firstname}!</h4><p>Click <a href='https://basketball-stats.netlify.com/userconfirmation/ipvtw0vfmlvh5fk2s/${confirmString}'>here</a> to confirm your email.</p><p>- Zach White</p>`
-          };
-          sgMail.send(msg);
+        const msg = {
+          to: email,
+          from: 'zach@basketballapp.com',
+          subject: 'confirm your account with Basketball App',
+          text: 'no text, using html instead',
+          html: `<h4 style="color: green";">whats up ${firstname}!</h4><p>Click <a href='https://basketball-stats.netlify.com/userconfirmation/ipvtw0vfmlvh5fk2s/${confirmString}'>here</a> to confirm your email.</p><p>- Zach White</p>`
+        };
+        const message = await sgMail.send(msg);
+        console.log(message);
           const response = {
             headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
             statusCode: 200,
             body: JSON.stringify({ message: 'User added successfully.', error: '' })
           };
           return response;
-        }
       } catch (err) {
         const response = {
           headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },

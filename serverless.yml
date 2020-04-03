@@ -109,3 +109,12 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  deleteplayer:
+    handler: delete/deleteplayer.handler
+    events:
+      - http:
+          path: deleteplayer
+          method: post
+          integration: lambda
+          cors: true
