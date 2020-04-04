@@ -8,7 +8,7 @@ exports.handler = async event => {
   const teamid = bodyData.teamid;
 
   const deleteTeam = {
-    text: 'DELETE FROM teams WHERE team_id = $1 AND user_id',
+    text: 'DELETE FROM teams WHERE team_id = $1 AND user_id = $2',
     values: [teamid, userid]
   };
 
