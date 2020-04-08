@@ -74,6 +74,15 @@ functions:
           integration: lambda
           cors: true
 
+  getgame:
+    handler: user/getgame.handler
+    events:
+      - http:
+          path: getgame
+          method: post
+          integration: lambda
+          cors: true
+
   addteam:
     handler: user/addteam.handler
     events:
@@ -124,6 +133,15 @@ functions:
     events:
       - http:
           path: deleteteam
+          method: post
+          integration: lambda
+          cors: true
+
+  deletegame:
+    handler: delete/deletegame.handler
+    events:
+      - http:
+          path: deletegame
           method: post
           integration: lambda
           cors: true

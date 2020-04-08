@@ -4,8 +4,7 @@ const pool = require('../db');
 
 exports.handler = async event => {
 
-  const bodyData = event.body;
-  const game = bodyData.game;
+  const game = event.body;
 
   const gamename = game.gamename;
   const userid = game.userid;

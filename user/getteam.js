@@ -22,13 +22,18 @@ exports.handler = async event => {
     values: [userid, teamid]
   };
 
-
+  const getGames = {
+    text:
+      'SELECT game_id, game_name, end_result, teamscore, oppscore FROM games WHERE user_id = $1 AND team_id = $2',
+    values: [userid, teamid]
+  };
 
   try {
     const playerData = await pool.query(getTeams);
     const teamName = await pool.query(getTeamName);
+    const gameData = await pool.query(getGames);
 
-    const [ returnedPlayers, returnedTeamName ] = await Promise.all([ playerData, teamName ]);
+    const [ returnedPlayers, returnedTeamName, returnedGames ] = await Promise.all([ playerData, teamName, gameData ]);
 
     let players = [];
     for (let i = 0; i < returnedPlayers.rows.length; i++) {
@@ -50,7 +55,8 @@ exports.handler = async event => {
         userid: userid,
         teamid: teamid,
         name: returnedTeamName.rows[0].team_name,
-        players: players
+        players: players,
+        games: returnedGames.rows
       }
     };
     return response;
