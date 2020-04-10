@@ -15,9 +15,16 @@ exports.handler = async event => {
     values: [gameid, teamid, userid]
   };
 
+  const deletePlayerGameEntries = {
+    text: 'DELETE FROM playergame WHERE gameid = $1 AND teamid = $2',
+    values: [gameid, teamid]
+  }
+
   try {
     const deletedGame = await pool.query(deleteGame);
-    if (deletedGame.rowCount > 0) {
+    const deletedPlayerGameEntries = await pool.query(deletePlayerGameEntries);
+    const allDone = await Promise.all([deletedGame, deletedPlayerGameEntries]);
+    if (allDone) {
       const response = {
         headers: {
           'Content-Type': 'application/json',

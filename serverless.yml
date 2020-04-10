@@ -2,7 +2,7 @@ service: basketball-stats-api
 app: basketball-stats-api
 org: zachwhitedev
 
-frameworkVersion: '>=1.1.0 <2.0.0'
+frameworkVersion: ">=1.1.0 <2.0.0"
 
 provider:
   name: aws
@@ -101,11 +101,11 @@ functions:
           integration: lambda
           cors: true
 
-  addgameevents:
-    handler: user/addgameevents.handler
+  addevent:
+    handler: user/addevent.handler
     events:
       - http:
-          path: addgameevents
+          path: addevent
           method: post
           integration: lambda
           cors: true
