@@ -65,6 +65,15 @@ functions:
           integration: lambda
           cors: true
 
+  getplayergame:
+    handler: user/getplayergame.handler
+    events:
+      - http:
+          path: getplayergame
+          method: post
+          integration: lambda
+          cors: true
+
   getteam:
     handler: user/getteam.handler
     events:
@@ -101,11 +110,29 @@ functions:
           integration: lambda
           cors: true
 
+  undogameevent:
+    handler: delete/undogameevent.handler
+    events:
+      - http:
+          path: undogameevent
+          method: post
+          integration: lambda
+          cors: true
+
   addevent:
     handler: user/addevent.handler
     events:
       - http:
           path: addevent
+          method: post
+          integration: lambda
+          cors: true
+
+  changescore:
+    handler: user/changescore.handler
+    events:
+      - http:
+          path: changescore
           method: post
           integration: lambda
           cors: true

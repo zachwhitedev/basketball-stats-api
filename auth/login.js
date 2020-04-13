@@ -4,7 +4,7 @@ const pool = require('../db');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 
-exports.handler = async event => {
+exports.handler = async (event) => {
   const userData = event.body;
   const email = userData.email;
   const password = userData.password;
@@ -12,7 +12,7 @@ exports.handler = async event => {
   const query = {
     text:
       'SELECT id, email, firstname, lastname, password, is_confirmed FROM users WHERE email = $1',
-    values: [email]
+    values: [email],
   };
 
   try {
@@ -21,8 +21,8 @@ exports.handler = async event => {
       const response = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          error: 'You must confirm your email account.'
-        })
+          error: 'You must confirm your email account.',
+        }),
       };
       return response;
     } else if (data.rows[0].is_confirmed == 'true') {
@@ -32,8 +32,8 @@ exports.handler = async event => {
           headers: { 'Content-Type': 'application/json' },
           statusCode: 400,
           body: JSON.stringify({
-            error: 'Email/password authentication failed.'
-          })
+            error: 'Email/password authentication failed.',
+          }),
         };
         return response;
       } else if (validPass) {
@@ -41,17 +41,17 @@ exports.handler = async event => {
           userid: data.rows[0].id,
           useremail: data.rows[0].email,
           firstname: data.rows[0].firstname,
-          lastname: data.rows[0].lastname
+          lastname: data.rows[0].lastname,
         };
         console.log(payload);
         let token = jwt.sign(payload, process.env.JWT_SECRET, {
-          expiresIn: 30 * 60
+          expiresIn: 30 * 60,
         });
         const response = {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            token: token
-          })
+            token: token,
+          }),
         };
         return response;
       } else {
@@ -59,8 +59,8 @@ exports.handler = async event => {
           headers: { 'Content-Type': 'application/json' },
           statusCode: 400,
           body: JSON.stringify({
-            error: 'Error authenticating user.'
-          })
+            error: 'Error authenticating user.',
+          }),
         };
         return response;
       }
@@ -68,17 +68,18 @@ exports.handler = async event => {
       const response = {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          error: 'User does not exist.'
-        })
+          error: 'User does not exist!',
+        }),
       };
       return response;
     }
   } catch (err) {
+    console.log(err);
     const response = {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        error: 'User does not exist.'
-      })
+        error: 'User does not exist.',
+      }),
     };
     return response;
   }
