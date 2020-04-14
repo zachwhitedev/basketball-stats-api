@@ -172,3 +172,12 @@ functions:
           method: post
           integration: lambda
           cors: true
+
+  singlecharge:
+    handler: payments/singlecharge.handler
+    events:
+      - http:
+          path: singlecharge
+          method: get
+          integration: lambda
+          cors: true

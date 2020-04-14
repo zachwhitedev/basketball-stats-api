@@ -17,11 +17,17 @@ exports.handler = async event => {
     values: [teamid, userid]
   }
 
+  const deletePlayerGames = {
+    text: 'DELETE FROM playergame WHERE teamid = $1',
+    values: [teamid]
+  }
+
   try {
     const queryOne = await pool.query(deleteTeam);
     const queryTwo = await pool.query(deletePlayers);
-    const [ deletedTeam, deletedPlayers ] = await Promise.all([queryOne, queryTwo]);
-    if (deletedTeam.rowCount > 0 && deletedPlayers.rowCount > 0) {
+    const queryThree = await pool.query(deletePlayerGames);
+    const [ deletedTeam, deletedPlayers, deletedPlayerGames ] = await Promise.all([queryOne, queryTwo, queryThree]);
+    if (deletedTeam.rowCount > 0 && deletedPlayers.rowCount > 0 && deletedPlayerGames.rowCount > 0) {
       const response = {
         headers: {
           'Content-Type': 'application/json',
