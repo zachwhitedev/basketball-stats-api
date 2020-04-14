@@ -9,13 +9,14 @@ provider:
   runtime: nodejs12.x
   region: us-west-2
   environment:
-    PG_USER: 'postgres1'
-    PG_HOST: 'zw-postgres-1.dsfgs56fg4s6__FAKE__.us-west-1.rds.amazonaws.com'
-    PG_DB: 'bballapp'
-    PG_PASS: 'sdfgsgs6567__FAKE__sdjfkhs78fgvsdzf'
-    PG_PORT: 8888
-    SENDGRID_API_KEY: 'sg.56asdf6a5ew__FAKE__dfadstyfa5sdf5a6sf'
-    JWT_SECRET: '67a__FAKE__dgsvf'
+    PG_USER: 'postgres'
+    PG_HOST: 'zw-postgres-1.cml7pwmsawbq.us-west-1.rds.amazonaws.com'
+    PG_DB: 'basketballapp'
+    PG_PASS: 'theyretakingmetomarrakesh'
+    PG_PORT: 5432
+    SENDGRID_API_KEY: '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'
+    JWT_SECRET: 'mamatoldme'
+    STRIPE_TEST_SECRET_KEY: 'sk_test_CpBKkhC8c5M48737aLhg4cO7'
 
 functions:
   register:

@@ -17,7 +17,7 @@ exports.handler = async (event) => {
       values: [playerid, gameid, teamid],
     };
     const query2 = {
-      text: `UPDATE games SET teamscore = teamscore + 2 WHERE game_id = $1 AND team_id = $2`, // fackkkk gotta do this for all scoring events
+      text: `UPDATE games SET teamscore = teamscore + 2 WHERE game_id = $1 AND team_id = $2`,
       values: [gameid, teamid],
     }
     try {

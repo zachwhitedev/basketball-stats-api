@@ -2,7 +2,7 @@
 
 const pool = require('../db');
 const sgMail = require('@sendgrid/mail');
-const stripe = require('stripe')('sk_test_CpBKkhC8c5M48737aLhg4cO7');
+const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
 
 // https://stripe.com/docs/payments/accept-a-payment#web
 
