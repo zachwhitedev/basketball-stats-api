@@ -10,7 +10,7 @@ const stripe = require('stripe')(process.env.STRIPE_TEST_SECRET_KEY);
 
 exports.handler = async (event) => {
   const paymentIntent = await stripe.paymentIntents.create({
-    amount: 199,
+    amount: 399,
     currency: 'usd',
     // Verify your integration in this guide by including this parameter
     metadata: { integration_check: 'accept_a_payment' },
